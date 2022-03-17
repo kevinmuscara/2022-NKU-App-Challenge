@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,49 +36,9 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item dropdown"> 
-            <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="icon-bell"></i>
-              <span class="count"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
-              <a class="dropdown-item py-3">
-                <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
-                <span class="badge badge-pill badge-primary float-right">View all</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
-                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                </div>
-              </a>
-            </div>
-          </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image">
+              <img class="img-xs rounded-circle" alt="Profile image">
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
@@ -145,6 +104,59 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
+            <% for(time in timesheet) { %>
+              <% for (log in logs) { %>
+                <div class="col-lg-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">1st period</h4>
+                      <p class="card-description">
+                        8:50-9:50
+                      </p>
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Student Name</th>
+                              <th>Time</th>
+                              <th>Event</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Jacob</td>
+                              <td class="text-danger"> 9:10 AM</td>
+                              <td><label class="badge badge-danger">Sign Out</label></td>
+                            </tr>
+                            <tr>
+                              <td>Messsy</td>
+                              <td class="text-danger"> 9:12 AM</td>
+                              <td><label class="badge badge-danger">Sign Out</label></td>
+                            </tr>
+                            <tr>
+                              <td>John</td>
+                              <td class="text-danger"> 9:13 AM</td>
+                              <td><label class="badge badge-danger">Sign Out</label></td>
+                            </tr>
+                            <tr>
+                              <td>Jacob</td>
+                              <td class="text-success"> 9:16 AM</td>
+                              <td><label class="badge badge-success">Sign in</label></td>
+                            </tr>
+                            <tr>
+                              <td>Dave</td>
+                              <td class="text-danger"> 9:31 AM</td>
+                              <td><label class="badge badge-danger">Sign Out</label></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }%>
+            <% } %>
+
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -180,7 +192,7 @@
                         <tr>
                           <td>Jacob</td>
                           <td class="text-success"> 9:16 AM</td>
-                          <td><label class="badge badge-success">Completed</label></td>
+                          <td><label class="badge badge-success">Sign in</label></td>
                         </tr>
                         <tr>
                           <td>Dave</td>
@@ -472,7 +484,6 @@
         </div>
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
           </div>
         </footer>

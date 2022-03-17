@@ -127,3 +127,4 @@ dist
 .pnp.*
 src/secret-key
 src/models/database/users.json
+src/models/database/times.json

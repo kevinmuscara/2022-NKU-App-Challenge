@@ -1,0 +1,29 @@
+{
+  "name": "hallpass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinmuscara/hallpass.git"
+  },
+  "keywords": [],
+  "author": "Kevin Muscara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinmuscara/hallpass/issues"
+  },
+  "homepage": "https://github.com/kevinmuscara/hallpass#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "fastify": "^3.27.4",
+    "fastify-formbody": "^5.2.0",
+    "fastify-multipart": "^5.3.1",
+    "fastify-secure-session": "^3.0.0",
+    "fastify-static": "^4.5.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "point-of-view": "^5.1.0"
+  }
+}

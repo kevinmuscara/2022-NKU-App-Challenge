@@ -31,8 +31,8 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Hello, <span class="text-black fw-bold"><%= user.username %></span></h1>
-            <h3 class="welcome-sub-text">Your classroom activity </h3>
+            <h1 class="welcome-text">Hello, Principal <span class="text-black fw-bold"><%= user.username %></span></h1>
+            <h3 class="welcome-sub-text">Your school's activity </h3>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -113,12 +113,38 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
+            <div class="col-sm-12">
+              <div class="statistics-details d-flex align-items-center justify-content-between">
+                <div>
+                  <p class="statistics-title">Scans Out</p>
+                  <h3 class="rate-percentage">7,700</h3>
+                  <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                </div>
+                <div>
+                  <p class="statistics-title">Scans In</p>
+                  <h3 class="rate-percentage">7,690</h3>
+                  <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+                </div>
+                <div>
+                  <p class="statistics-title">Skip Rate</p>
+                  <h3 class="rate-percentage">10%</h3>
+                  <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                </div>
+                <div class="d-none d-md-block">
+                  <p class="statistics-title">Avg. Check-Out</p>
+                  <h3 class="rate-percentage">2m:35s</h3>
+                  <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">1st period</h4>
+                  <h4 class="card-title">Currently Checked Out</h4>
                   <p class="card-description">
-                    8:50-9:50
+                    
                   </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
@@ -127,33 +153,39 @@
                           <th>Student Name</th>
                           <th>Time</th>
                           <th>Event</th>
+                          <th>Scanner</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Jacob</td>
+                          <td>Jacob Blake</td>
                           <td class="text-danger"> 9:10 AM</td>
                           <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>Messsy</td>
                           <td class="text-danger"> 9:12 AM</td>
                           <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>John</td>
                           <td class="text-danger"> 9:13 AM</td>
                           <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>Jacob</td>
-                          <td class="text-success"> 9:16 AM</td>
-                          <td><label class="badge badge-success">Sign in</label></td>
+                          <td class="text-danger"> 9:16 AM</td>
+                          <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>Dave</td>
                           <td class="text-danger"> 9:31 AM</td>
                           <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                       </tbody>
                     </table>
@@ -165,50 +197,50 @@
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Hoverable Table</h4>
+                  <h4 class="card-title">Recent Event Log</h4>
                   <p class="card-description">
-                    Add class <code>.table-hover</code>
+                    
                   </p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>User</th>
-                          <th>Product</th>
-                          <th>Sale</th>
-                          <th>Status</th>
+                          <th>Student Name</th>
+                          <th>Time</th>
+                          <th>Event</th>
+                          <th>Scanner</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Jacob</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td>Jacob Blake</td>
+                          <td class="text-danger"> 9:10 AM</td>
+                          <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>Messsy</td>
-                          <td>Flash</td>
-                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-warning">In progress</label></td>
+                          <td class="text-danger"> 9:12 AM</td>
+                          <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>John</td>
-                          <td>Premier</td>
-                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-info">Fixed</label></td>
+                          <td class="text-danger"> 9:13 AM</td>
+                          <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
-                          <td>Peter</td>
-                          <td>After effects</td>
-                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
-                          <td><label class="badge badge-success">Completed</label></td>
+                          <td>Jacob</td>
+                          <td class="text-success"> 9:16 AM</td>
+                          <td><label class="badge badge-success">Sign in</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                         <tr>
                           <td>Dave</td>
-                          <td>53275535</td>
-                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
-                          <td><label class="badge badge-warning">In progress</label></td>
+                          <td class="text-danger"> 9:31 AM</td>
+                          <td><label class="badge badge-danger">Sign Out</label></td>
+                          <td>Your Mom's class</td>
                         </tr>
                       </tbody>
                     </table>

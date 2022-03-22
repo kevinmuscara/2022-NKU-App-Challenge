@@ -1,4 +1,5 @@
 const teacher = require('../models/teacher.model')
+const time = require('../models/time.model')
 
 let routes = [
   {
@@ -11,6 +12,20 @@ let routes = [
       } else {
         res.view('basic-table.ejs', {user}) // if there's a user session, pass through.
       }
+    }
+  },
+  {
+    method: 'POST',
+    url: '/checkout',
+    handler: async(req, res) => {
+      
+    }
+  },
+  {
+    method: 'POST',
+    url: '/checkin',
+    handler: async(req, res) => {
+
     }
   },
   {
@@ -63,9 +78,55 @@ let routes = [
     handler: async(req, res) => {
       const user = req.session.get('user')
       if(user) {
-        res.view('students.ejs', {user})
+        res.view('students.ejs', {error: '', user})
       } else {
         res.view('login.ejs', { error: '' })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    url: '/students',
+    handler: async(req, res) => {
+      const user = req.session.get('user')
+      if(user) {
+        let data = JSON.parse(JSON.stringify(req.body))
+
+        await time.getTime(data.nfcTag).catch(async(err) => {
+          if(err.status === 500) {
+            // student doesn't already exist so continue
+            let newStudent = {
+              id: data.nfcTag,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              type: "Student"
+            }
+
+            await time.createTime(newStudent, newStudent.id).then(() => {
+              res.view('students.ejs', { user, error: '' })
+            })
+          } else {
+            res.view('students.ejs', { user, error: `A student with that tag is already onboarded.`})
+          }
+        })
+      } else {
+        res.redirect('/login')
+      }
+    }
+  },
+  {
+    method: 'GET',
+    url: '/principal',
+    handler: async(req, res) => {
+      const user = req.session.get('user')
+      if(user) {
+        if(user.type == 'Principal') {
+          res.view('principal.ejs', { user })
+        } else {
+          res.redirect('/')
+        }
+      } else {
+        res.redirect('/login')
       }
     }
   },
@@ -74,25 +135,26 @@ let routes = [
     url: '/register',
     handler: async(req, res) => {
       let data = JSON.parse(JSON.stringify(req.body))
-      // Check if account already exists
-      await teacher.getUser(data.email).catch(async(err) => {
+      await teacher.getUser(data.email).then(async(user) => {
+        if(user) {
+          res.view('register.ejs', { error: 'Account already exists with that email.'})
+        }
+      }).catch(async(err) => {
         if(err.status === 500) {
           let newUser = {
             id: data.email,
             email: data.email,
             username: data.username,
             password: data.password,
-            type: "Teacher"
+            type: 'Teacher'
           }
 
           await teacher.createUser(newUser, newUser.id).then(user => {
             req.session.set('user', user)
             res.redirect('/')
-          })
-        } else {
-          res.view('register.ejs', { error: 'Account already exists with that email.'})
+          });
         }
-      });
+      })
     }
   },
   {

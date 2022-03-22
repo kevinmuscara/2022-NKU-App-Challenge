@@ -16,7 +16,11 @@ function getTimes() {
 }
 
 function getTime(id) {
-  return new Promise(async(resolve, reject) => helper.isInArray(times, id).then(time => resolve(time)).catch(err => reject(err)))
+  return new Promise(async(resolve, reject) => {
+    helper.isInArray(times, id).then(time => {
+      resolve(time)
+    }).catch(err => reject(err))
+  })
 }
 
 function createTime(newTime, ID) {

@@ -77,19 +77,16 @@
               </a>
             </div>
           </li>
-          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image">
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-              <div class="dropdown-header text-center">
-                <p class="mb-1 mt-3 font-weight-semibold"><%= user.username%></p>
-                <p class="fw-light text-muted mb-0"><%= user.email %></p>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+              <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                <div class="dropdown-header text-center">
+                </div>
               </div>
-              <a class="dropdown-item" href="/logout"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
@@ -117,6 +114,19 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#self" aria-expanded="false" aria-controls="auth">
+              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <span class="menu-title">My Account</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="self">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="#"> <%= user.email %> </a></li>
+                <li class="nav-item"> <a class="nav-link text-danger" href="/logout"> Signout </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Tables</span>
@@ -130,7 +140,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <i class="menu-icon mdi mdi-account-multiple"></i>
               <span class="menu-title">Users</span>
               <i class="menu-arrow"></i>
             </a>
@@ -198,13 +208,16 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Onboard Students</h4>
-                  <p class="card-description"></p>
-                  <form class="pt-3">
+                  <p class="card-description" style="color: red;"><%= error %></p>
+                  <form class="pt-3" method="POST" action="/students">
                     <div class="form-group">
                       <input type="text" class="form-control form-control-lg" name="firstName" id="firstName" placeholder="Student First Name" >
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control form-control-lg" name="lastName" id="lastName" placeholder="Student Last Name" >
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-lg" name="nfcTag" id="nfcTag" placeholder="Tag ID" > 
                     </div>
                     <div class="form-group">
                       <center>

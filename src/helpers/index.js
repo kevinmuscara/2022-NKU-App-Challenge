@@ -5,6 +5,18 @@ let createNewId = (array) => {
   else return 1;
 }
 
+function validateUser(user) {
+  return new Promise(async(resolve, reject) => {
+    const { id, email, username, password, type } = user;
+
+    if(typeof id !== "string") reject({ status: 500, message: 'invalid id type'});
+    else if(typeof email !== "string") reject({ status: 500, message: 'invalid email type'});
+    else if(typeof username !== 'string') reject({ status: 500, message: 'invalid username type'});
+    else if(typeof password !== 'string' || 'number') reject({ status: 500, message: 'invalid password type'});
+    else resolve(user);
+  });
+}
+
 function isInArray(array, id) {
   return new Promise(async(resolve, reject) => {
     let row = array.find(r => r.id == id);
@@ -24,4 +36,4 @@ function writeJSON(filename, content) {
   })
 }
 
-module.exports = { createNewId, isInArray, writeJSON }
+module.exports = { createNewId, isInArray, writeJSON, validateUser }

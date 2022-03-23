@@ -1,0 +1,19 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1><%= status %></h1>
+	<form action="/checkout" method="POST">
+		<input type="text" name="tagID" id="tagID" placeholder="Tag ID" />
+		<button type="submit" value="Check Out">Check Out</button>
+	</form>    
+	<hr>
+	<form action="/checkin" method="POST">
+		<input type="text" name="tagID" id="tagID" placeholder="Tag ID" />
+		<button type="submit" value="Check Out">Check In</button>
+	</form>
+</body>
+</html>

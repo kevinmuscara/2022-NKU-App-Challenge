@@ -32,10 +32,64 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Hello, <span class="text-black fw-bold"><%= user.username %></span></h1>
-            <h3 class="welcome-sub-text">Your classroom students </h3>
+            <h1 class="welcome-text">Hello, Principal <span class="text-black fw-bold"><%= user.username %></span></h1>
+            <h3 class="welcome-sub-text">Your school's schedule </h3>
           </li>
         </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown"> 
+            <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="icon-bell"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
+              <a class="dropdown-item py-3">
+                <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../../images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../../images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../../images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow py-2">
+                  <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                  <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+              <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                <div class="dropdown-header text-center">
+                </div>
+              </div>
+            </li>
+          </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
       </div>
     </nav>
     <div class="container-fluid page-body-wrapper">
@@ -97,6 +151,20 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#schedule" aria-expanded="false" aria-controls="auth">
+              <i class="menu-icon mdi mdi-briefcase"></i>
+              <span class="menu-title">Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="schedule">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/setscanner"> Assign Scanner </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/students"> Onboard Students </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/schedule"> Master Schedule </a></li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </nav>
       <div class="main-panel">
@@ -106,25 +174,49 @@
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Students</h4>
+                  <h4 class="card-title">Schedule</h4>
                   <p class="card-description"></p>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Tag Number</th>
+                          <th>Block Name</th>
+                          <th>Start Time</th>
+                          <th>End Time</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
-                        <% for (var i = 0; i < students.length; i++) { %>
-                          <tr>
-                            <td><%= students[i].firstName %></td>
-                            <td><%= students[i].lastName %></td>
-                            <td><label class="badge badge-success"><%= students[i].id %></label></td>
-                          </tr>
-                        <% }%>
+                        <tr>
+                          <td>1st</td>
+                          <td>9:00 AM</td>
+                          <td>10:00 AM</td>
+                          <td><i class="mdi mdi-delete text-danger"></i></td>
+                        </tr>
+                        <tr>
+                          <td>2st</td>
+                          <td>10:00 AM</td>
+                          <td>11:00 AM</td>
+                          <td><i class="mdi mdi-delete text-danger"></i></td>
+                        </tr>
+                        <tr>
+                          <td>3st</td>
+                          <td>11:00 AM</td>
+                          <td>12:00 AM</td>
+                          <td><i class="mdi mdi-delete text-danger"></i></td>
+                        </tr>
+                        <tr>
+                          <td>4st</td>
+                          <td>12:00 AM</td>
+                          <td>1:00 PM</td>
+                          <td><i class="mdi mdi-delete text-danger"></i></td>
+                        </tr>
+                        <tr>
+                          <td>5st</td>
+                          <td>1:00 PM</td>
+                          <td>2:00 PM</td>
+                          <td><i class="mdi mdi-delete text-danger"></i></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -136,21 +228,24 @@
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Onboard Students</h4>
+                  <h4 class="card-title">Add Schedule Block</h4>
                   <p class="card-description" style="color: red;"><%= error %></p>
                   <form class="pt-3" method="POST" action="/students">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-lg" name="firstName" id="firstName" placeholder="Student First Name" >
+                      Start Time
+                      <input type="datetime-local" class="form-control form-control-lg" name="firstName" id="firstName" placeholder="Start Time" >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-lg" name="lastName" id="lastName" placeholder="Student Last Name" >
+                      End Time
+                      <input type="datetime-local" class="form-control form-control-lg" name="lastName" id="lastName" placeholder="End Time" >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-lg" name="nfcTag" id="nfcTag" placeholder="Tag ID" > 
+                      Block Name
+                      <input type="text" class="form-control form-control-lg" name="nfcTag" id="nfcTag" placeholder="Block Name" > 
                     </div>
                     <div class="form-group">
                       <center>
-                        <button class="btn btn-block btn-primary btn-lg font-weight-medium auto-form-btn" type="submit">Create Student</button>
+                        <button class="btn btn-block btn-primary btn-lg font-weight-medium auto-form-btn" type="submit">Scan Tag</button>
                       </center>
                     </div>
                   </form>

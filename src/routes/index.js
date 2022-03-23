@@ -1,3 +1,4 @@
+const { convertArrayToObject } = require('jsonarraytools');
 const teacher = require('../models/teacher.model')
 const time = require('../models/time.model')
 
@@ -10,7 +11,23 @@ let routes = [
       if(!user) {
         res.redirect('/login') // prompt client to login if no user session found
       } else {
-        res.view('basic-table.ejs', {user}) // if there's a user session, pass through.
+        if(user.type == 'Principal') {
+          res.view('principal.ejs', {user })
+        } else {
+          res.view('basic-table.ejs', {user}) // if there's a user session, pass through.
+        }
+      }
+    }
+  },
+  {
+    method: 'GET',
+    url: '/dev',
+    handler: async(req, res) => {
+      const user = req.session.get('user')
+      if(!user) {
+        res.redirect('/login')
+      } else {
+        res.view('dev.ejs', { status: ''});
       }
     }
   },
@@ -18,14 +35,44 @@ let routes = [
     method: 'POST',
     url: '/checkout',
     handler: async(req, res) => {
-      
+      const user = req.session.get('user')
+      if(!user) {
+        res.redirect('/login')
+      } else {
+        let data = JSON.parse(JSON.stringify(req.body))
+        await teacher.getUser(data.tagID).then(async(student) => {
+          let timeLog = { ...student, time: Date.now(), status: 'out'}
+          await time.createTime(timeLog, student.id).then(() => {
+            res.view('dev.ejs', {status: `${student.firstName} has checked out!`})
+          });
+        }).catch(async(err) => {
+          if(err.status === 500) {
+            res.view('dev.ejs', {status: `${data.tagID} does not exist or is not assigned to a student.`})
+          }
+        })
+      }
     }
   },
   {
     method: 'POST',
     url: '/checkin',
     handler: async(req, res) => {
-
+      const user = req.session.get('user')
+      if(!user) {
+        res.redirect('/login')
+      } else {
+        let data = JSON.parse(JSON.stringify(req.body))
+        await teacher.getUser(data.tagID).then(async(student) => {
+          let timeLog = { ...student, time: Date.now(), status: 'in'}
+          await time.createTime(timeLog, student.id).then(() => {
+            res.view('dev.ejs', {status: `${student.firstName} has checked in!`})
+          });
+        }).catch(async(err) => {
+          if(err.status === 500) {
+            res.view('dev.ejs', {status: `${data.tagID} does not exist or is not assigned to a student.`})
+          }
+        })
+      }
     }
   },
   {
@@ -74,11 +121,33 @@ let routes = [
   },
   {
     method: 'GET',
+    url: '/schedule',
+    handler: async(req, res) => {
+      const user = req.session.get('user')
+      if(!user) {
+        res.redirect('/login')
+      } else {
+        res.view('schedule.ejs', { error: '', user })
+      }
+    }
+  },
+  {
+    method: 'GET',
     url: '/students',
     handler: async(req, res) => {
       const user = req.session.get('user')
       if(user) {
-        res.view('students.ejs', {error: '', user})
+        let allStudents = await teacher.getUsers()
+        let students = []
+
+        for(var i = 0; i < allStudents.length; i++) {
+          if(allStudents[i].type == "Student") {
+            if(allStudents[i].teacher == user.id) {
+              students.push(allStudents[i])
+            }
+          }
+        }
+        res.view('students.ejs', {error: '', user, students })
       } else {
         res.view('login.ejs', { error: '' })
       }
@@ -91,10 +160,48 @@ let routes = [
       const user = req.session.get('user')
       if(user) {
         let data = JSON.parse(JSON.stringify(req.body))
+        await teacher.getUser(data.nfcTag).catch(async(acc) => {
+          if(acc) {
+            let allStudents = await teacher.getUsers()
+            let students = []
+    
+            for(var i = 0; i < allStudents.length; i++) {
+              if(allStudents[i].type == "Student") {
+                if(allStudents[i].teacher == user.id) {
+                  students.push(allStudents[i])
+                }
+              }
+            }
 
-        await time.getTime(data.nfcTag).catch(async(err) => {
+            if(acc.status === 500) {
+              let newStudent = {
+                id: data.nfcTag,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                teacher: user.id,
+                type: "Student"
+              }
+  
+              await teacher.createUser(newStudent, newStudent.id).then(async() => {
+                res.view('students.ejs', { error: '', user, students })
+              });
+            } else {
+              res.view('students.ejs', { students, error: 'A student with that ID already exists.', user })
+            }
+          }
+        }).catch(async(err) => {
           if(err.status === 500) {
-            // student doesn't already exist so continue
+            let allStudents = await teacher.getUsers()
+            let students = []
+    
+            for(var i = 0; i < allStudents.length; i++) {
+              if(allStudents[i].type == "Student") {
+                if(allStudents[i].teacher == user.id) {
+                  students.push(allStudents[i])
+                }
+              }
+            }
+
             let newStudent = {
               id: data.nfcTag,
               firstName: data.firstName,
@@ -102,11 +209,9 @@ let routes = [
               type: "Student"
             }
 
-            await time.createTime(newStudent, newStudent.id).then(() => {
-              res.view('students.ejs', { user, error: '' })
-            })
-          } else {
-            res.view('students.ejs', { user, error: `A student with that tag is already onboarded.`})
+            await teacher.createUser(newStudent, newStudent.id).then(() => {
+              res.view('students.ejs', { error: '', user, students, })
+            });
           }
         })
       } else {

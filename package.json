@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "nodemon src",
+    "create-key": "npx fastify-secure-session > secret-key"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kevinmuscara/hallpass.git"
@@ -24,6 +27,7 @@
     "fastify-static": "^4.5.0",
     "fs": "^0.0.1-security",
     "jsonarraytools": "^1.0.1",
+    "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "point-of-view": "^5.1.0"
   }

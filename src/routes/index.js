@@ -1,6 +1,7 @@
-const { convertArrayToObject } = require('jsonarraytools');
 const teacher = require('../models/teacher.model')
 const time = require('../models/time.model')
+
+const Controller = require('../controllers')
 
 let routes = [
   {
@@ -81,7 +82,7 @@ let routes = [
     handler: async(req, res) => {
       const user = req.session.get('user')
       if(user) {
-        res.view('index.ejs', {user})
+        res.view('documentation.ejs', {user})
       } else {
         res.redirect('/login')
       }
@@ -139,14 +140,19 @@ let routes = [
       if(user) {
         let allStudents = await teacher.getUsers()
         let students = []
-
+        
         for(var i = 0; i < allStudents.length; i++) {
           if(allStudents[i].type == "Student") {
-            if(allStudents[i].teacher == user.id) {
+            if(user.type == "Principal") {
               students.push(allStudents[i])
+            } else {
+              if(allStudents[i].teacher == user.id) {
+                students.push(allStudents[i])
+              }
             }
           }
         }
+
         res.view('students.ejs', {error: '', user, students })
       } else {
         res.view('login.ejs', { error: '' })
@@ -164,15 +170,19 @@ let routes = [
           if(acc) {
             let allStudents = await teacher.getUsers()
             let students = []
-    
+            
             for(var i = 0; i < allStudents.length; i++) {
               if(allStudents[i].type == "Student") {
-                if(allStudents[i].teacher == user.id) {
+                if(user.type == "Principal") {
                   students.push(allStudents[i])
+                } else {
+                  if(allStudents[i].teacher == user.id) {
+                    students.push(allStudents[i])
+                  }
                 }
               }
             }
-
+    
             if(acc.status === 500) {
               let newStudent = {
                 id: data.nfcTag,
@@ -193,11 +203,15 @@ let routes = [
           if(err.status === 500) {
             let allStudents = await teacher.getUsers()
             let students = []
-    
+            
             for(var i = 0; i < allStudents.length; i++) {
               if(allStudents[i].type == "Student") {
-                if(allStudents[i].teacher == user.id) {
+                if(user.type == "Principal") {
                   students.push(allStudents[i])
+                } else {
+                  if(allStudents[i].teacher == user.id) {
+                    students.push(allStudents[i])
+                  }
                 }
               }
             }

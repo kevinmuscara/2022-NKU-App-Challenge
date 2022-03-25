@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hallpass</title>
+  <link rel="stylesheet" href="gfm.css" />
+  <link rel="stylesheet" href="css.css" />
+</head>
+
+<body>
+  <header class="mx-auto max-w-screen-lg flex gap-3 justify-between">
+    <div class="p-4">
+      <p class="text-2xl text-gray-900 tracking-tight font-semibold">
+        <strong href="/">Hall</strong><span class="font-light"><strong>pass</strong></span>
+      </p>
+      <p class="text-sm text-gray-600">Welcome <strong>kevinmuscara</strong></p>
+    </div>
+    <label for="docs_sidebar" class="px-4 py-4 md:hidden border-l-2 border-gray-100 flex items-center hover:bg-gray-50">
+      <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"></path>
+      </svg>
+    </label>
+  </header>
+
+  <nav class="bg-gray-50 py-2 border-t-2 border-b-2 border-gray-100">
+    <ul class="flex justify-center gap-8 mx-4">
+      <li><a href="/management" class="text-gray-600 hover:underline font-bold">Management</a></li>
+      <li><a href="/reports" class="text-gray-600 hover:underline">Reports</a></li>
+      <li><a href="/account" class="text-gray-600 hover:underline">My Account</a></li>
+    </ul>
+  </nav>
+
+  <input type="checkbox" class="hidden toggle" id="docs_sidebar" autocomplete="off" />
+
+  <div class="fixed inset-0 flex z-40 hidden toggled">
+    <label class="absolute inset-0 bg-gray-600 opacity-75"for="docs_sidebar"></label>
+    <div class="relative flex-1 flex flex-col w-[16rem] h-full bg-white border-r-2 border-gray-100">
+      <div class="p-4 border-b-2 border-gray-100">
+        <p class="text-2xl text-gray-900 tracking-tight font-semibold">
+          <strong href="/">Hall</strong><span class="font-light"><strong>pass</strong></span>
+        </p>
+        <p class="text-sm text-gray-600">Welcome <strong>kevinmuscara</strong></p>
+      </div>
+
+      <nav class="pt-2 pb-16 px-4 overflow-x-auto">
+        <ul class="list-decimal list-inside font-semibold nested">
+          <li class="my-2 block"><a href="/management/scanners" class="tw-1c0vx2e font-bold">Scanners</a></li>
+          <li class="my-2 block"><a href="/management/students" class="tw-8qeiyf font-bold">Students</a></li>
+          <li class="my-2 block"><a href="/management/schedule" class="tw-8qeiyf font-bold">Schedule</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="mx-auto max-w-screen-lg px-4 flex gap-6">
+    <nav class="w-[16rem] flex-shrink-0 hidden md:block py-8 pr-4 border-r-2 border-gray-100">
+      <ul class="list-decimal list-inside font-semibold nested">
+        <li class="my-2 block"><a href="/management/scanners" class="tw-1c0vx2e font-bold">Scanners</a></li>
+        <li class="my-2 block"><a href="/management/students" class="tw-8qeiyf font-bold">Students</a></li>
+        <li class="my-2 block"><a href="/management/schedule" class="tw-8qeiyf font-bold">Schedule</a></li>
+      </ul>
+    </nav>
+    <main class="py-8 overflow-hidden">
+      <h1 class="text-4xl text-gray-900 tracking-tight font-extrabold mt-6">Scanners</h1>
+      <div class="mt-6 markdown-body">
+        <p>Use the forms below to register a scanner and assign it to a teacher. If you have yet to create a teacher account, please goto the <a href="/account">Account</a> section</p>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

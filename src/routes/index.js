@@ -6,6 +6,27 @@ const Controller = require('../controllers')
 let routes = [
   {
     method: 'GET',
+    url: '/management',
+    handler: async(req, res) => {
+      res.view('/v2/index.ejs')
+    }
+  },
+  {
+    method: 'GET',
+    url: '/reports',
+    handler: async(req, res) => {
+      res.view('/v2/reports.ejs')
+    }
+  },
+  {
+    method: 'GET',
+    url: '/account',
+    handler: async(req, res) => {
+      res.view('/v2/account.ejs')
+    }
+  },
+  {
+    method: 'GET',
     url: '/',
     handler: async(req, res) => {
       const user = req.session.get('user') // find user session

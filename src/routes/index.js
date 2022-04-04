@@ -1,30 +1,7 @@
 const teacher = require('../models/teacher.model')
 const time = require('../models/time.model')
 
-const Controller = require('../controllers')
-
 let routes = [
-  {
-    method: 'GET',
-    url: '/management',
-    handler: async(req, res) => {
-      res.view('/v2/index.ejs')
-    }
-  },
-  {
-    method: 'GET',
-    url: '/reports',
-    handler: async(req, res) => {
-      res.view('/v2/reports.ejs')
-    }
-  },
-  {
-    method: 'GET',
-    url: '/account',
-    handler: async(req, res) => {
-      res.view('/v2/account.ejs')
-    }
-  },
   {
     method: 'GET',
     url: '/',
@@ -36,76 +13,50 @@ let routes = [
         if(user.type == 'Principal') {
           res.view('principal.ejs', {user })
         } else {
-          res.view('basic-table.ejs', {user}) // if there's a user session, pass through.
+          time.getTimes().then(async(times) => {
+            res.view('basic-table.ejs', { user, times })
+          }).catch(async(err) => {
+            if(err.status === 202) {
+              res.view('basic-table.ejs', { user, times: [] })
+            }
+          })
         }
       }
     }
   },
   {
     method: 'GET',
-    url: '/dev',
+    url: '/scan/:id',
     handler: async(req, res) => {
       const user = req.session.get('user')
       if(!user) {
         res.redirect('/login')
       } else {
-        res.view('dev.ejs', { status: ''});
-      }
-    }
-  },
-  {
-    method: 'POST',
-    url: '/checkout',
-    handler: async(req, res) => {
-      const user = req.session.get('user')
-      if(!user) {
-        res.redirect('/login')
-      } else {
-        let data = JSON.parse(JSON.stringify(req.body))
-        await teacher.getUser(data.tagID).then(async(student) => {
-          let timeLog = { ...student, time: Date.now(), status: 'out'}
-          await time.createTime(timeLog, student.id).then(() => {
-            res.view('dev.ejs', {status: `${student.firstName} has checked out!`})
-          });
+        let { id } = req.params
+        await teacher.getUser(id).then(async(student) => {
+          await time.getTimes().then(async(studentTimes) => {
+            let realStudents = []
+            studentTimes.forEach(studentTime => {
+              if(studentTime.id == student.id) {
+                realStudents.push(studentTime);
+              }
+            });
+
+            if(realStudents[realStudents.length - 1].status === true) {
+              // set to false
+              await time.createTime({ ...realStudents[realStudents.length - 1], time: Date().toString(), status: false }).then((newStudent => res.redirect('/')));
+            } else {
+              // set to true
+              await time.createTime({ ...realStudents[realStudents.length - 1], time: Date().toString(), status: true }).then((newStudent => res.redirect('/')));
+            }
+          }).catch(async(err) => {
+            if(err.status === 202) {
+              await time.createTime({ ...student, time: Date().toString(), status: false }).then((newStudent) => res.redirect('/'))
+            }
+          })
         }).catch(async(err) => {
-          if(err.status === 500) {
-            res.view('dev.ejs', {status: `${data.tagID} does not exist or is not assigned to a student.`})
-          }
+          if(err.status === 500) {}
         })
-      }
-    }
-  },
-  {
-    method: 'POST',
-    url: '/checkin',
-    handler: async(req, res) => {
-      const user = req.session.get('user')
-      if(!user) {
-        res.redirect('/login')
-      } else {
-        let data = JSON.parse(JSON.stringify(req.body))
-        await teacher.getUser(data.tagID).then(async(student) => {
-          let timeLog = { ...student, time: Date.now(), status: 'in'}
-          await time.createTime(timeLog, student.id).then(() => {
-            res.view('dev.ejs', {status: `${student.firstName} has checked in!`})
-          });
-        }).catch(async(err) => {
-          if(err.status === 500) {
-            res.view('dev.ejs', {status: `${data.tagID} does not exist or is not assigned to a student.`})
-          }
-        })
-      }
-    }
-  },
-  {
-    method: 'GET',
-    url: '/index',
-    handler: async(req, res) => {
-      const user = req.session.get('user')
-      if(user) {
-        res.view('documentation.ejs', {user})
-      } else {
-        res.redirect('/login')
       }
     }
   },
@@ -138,18 +89,6 @@ let routes = [
         res.redirect('/')
       } else {
         res.view('register.ejs', {error: ''})
-      }
-    }
-  },
-  {
-    method: 'GET',
-    url: '/schedule',
-    handler: async(req, res) => {
-      const user = req.session.get('user')
-      if(!user) {
-        res.redirect('/login')
-      } else {
-        res.view('schedule.ejs', { error: '', user })
       }
     }
   },

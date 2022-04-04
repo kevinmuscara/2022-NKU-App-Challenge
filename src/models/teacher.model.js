@@ -26,7 +26,7 @@ function getUser(id) {
 function createUser(newUser, ID) {
   return new Promise(async(resolve, reject) => {
     const id = { ID };
-    newUser = { ...id, ...newUser };
+    newUser = { ...id, ...newUser, status: false };
     
     users.push(newUser);
     helper.writeJSON(filename, users);

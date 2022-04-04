@@ -27,8 +27,10 @@
     "fastify-static": "^4.5.0",
     "fs": "^0.0.1-security",
     "jsonarraytools": "^1.0.1",
+    "node-webcam": "^0.8.0",
     "nodemon": "^2.0.15",
     "path": "^0.12.7",
-    "point-of-view": "^5.1.0"
+    "point-of-view": "^5.1.0",
+    "quagga": "^0.12.1"
   }
 }

@@ -146,25 +146,27 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
+                <% if(user.type != 'Principal') { %>
                 <li class="nav-item"> <a class="nav-link" href="/students"> Students </a></li>
-                <li class="nav-item"> <a class="nav-link" href="/reports"> Reports </a></li>
+                <% } %>
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#schedule" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-briefcase"></i>
-              <span class="menu-title">Management</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="schedule">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/setscanner"> Assign Scanner </a></li>
-                <li class="nav-item"> <a class="nav-link" href="/students"> Onboard Students </a></li>
-                <li class="nav-item"> <a class="nav-link" href="/schedule"> Master Schedule </a></li>
-              </ul>
-            </div>
-          </li>
+          <% if(user.type == 'Principal') { %>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#management" aria-expanded="false" aria-controls="management">
+                <i class="menu-icon mdi mdi-briefcase"></i>
+                <span class="menu-title">Management</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="management">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/setscanner"> Assign Scanner </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/students"> Onboard Students </a></li>
+                </ul>
+              </div>
+            </li>
+          <% } %>
         </ul>
       </nav>
       <div class="main-panel">
